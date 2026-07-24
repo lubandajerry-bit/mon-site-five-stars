@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"/><link href="https://cdn.prod.website-files.com" rel="preconnect"/><title>Contact - Jeremie's Five-Star</title><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="Webflow" name="generator"/><link href="../6a0da6b29614e8743e58b1a1/css/jeremies-five-star-site-17f12b.webflow.shared.10fe411de.css" rel="stylesheet" type="text/css"/><script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script><link href="https://cdn.prod.website-files.com/img/favicon.ico" rel="shortcut icon" type="image/x-icon"/><link href="https://cdn.prod.website-files.com/img/webclip.png" rel="apple-touch-icon"/><style id="orbit-override">
+
+/* 1. Permettre aux cartes d etre visibles en dehors du hero */
+.fs-hero        { overflow: visible !important; }
+.fs-hero-visual {
+  overflow: visible !important;
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 520px;
+  height: 520px !important;
+}
+
+/* 2. Reset positionnement absolu ancien des cartes */
+.fs-card-1,
+.fs-card-2,
+.fs-card-3 {
+  position: absolute !important;
+  top: auto !important; left: auto !important;
+  right: auto !important; bottom: auto !important;
+  animation: none !important;
+  white-space: nowrap;
+}
+
+/* 3. Anneau orbital : pivot au centre du cercle J-star */
+.fs-orbit-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-origin: 0 0;
+  animation: orbit-ring-spin 10s linear infinite;
+  z-index: 10;
+}
+
+/* 4. Slots : 3 points a 120 deg sur l anneau (rayon 195px) */
+.fs-orbit-slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+.fs-slot-1 { transform: rotate(  0deg) translateY(-195px); }
+.fs-slot-2 { transform: rotate(120deg) translateY(-195px); }
+.fs-slot-3 { transform: rotate(240deg) translateY(-195px); }
+
+/* 5. Cartes centrees sur leur slot, contre-rotation pour rester droites */
+.fs-orbit-slot .fs-card-float {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+/* Slot 1 : angle initial 0 deg -> contre-rotation 0 -> -360 */
+.fs-slot-1 .fs-card-float {
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: orbit-counter-0   10s linear infinite;
+}
+/* Slot 2 : angle initial 120 deg -> contre-rotation -120 -> -480 */
+.fs-slot-2 .fs-card-float {
+  transform: translate(-50%, -50%) rotate(-120deg);
+  animation: orbit-counter-120 10s linear infinite;
+}
+/* Slot 3 : angle initial 240 deg -> contre-rotation -240 -> -600 */
+.fs-slot-3 .fs-card-float {
+  transform: translate(-50%, -50%) rotate(-240deg);
+  animation: orbit-counter-240 10s linear infinite;
+}
+
+/* 6. Cercle J-star : visible au-dessus de l anneau */
+.fs-hero-circle       { z-index: 5; position: relative; }
+.fs-hero-circle-inner { z-index: 5; }
+
+/* 7. Keyframes ───────────────────────────────────── */
+@keyframes orbit-ring-spin {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+@keyframes orbit-counter-0 {
+  from { transform: translate(-50%, -50%) rotate(  0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+@keyframes orbit-counter-120 {
+  from { transform: translate(-50%, -50%) rotate(-120deg); }
+  to   { transform: translate(-50%, -50%) rotate(-480deg); }
+}
+@keyframes orbit-counter-240 {
+  from { transform: translate(-50%, -50%) rotate(-240deg); }
+  to   { transform: translate(-50%, -50%) rotate(-600deg); }
+}
+
+/* 8. Hover : ombre doree */
+.fs-card-float {
+  transition: box-shadow 0.3s ease;
+  cursor: default;
+}
+.fs-card-float:hover {
+  box-shadow: 0 16px 48px rgba(245,158,11,0.45) !important;
+}
+
+/* keyframes de base (float + spin) conserves pour le reste du site */
+@keyframes fs-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-18px); }
+}
+@keyframes fs-spin-slow {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+@keyframes fs-slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+@keyframes fs-fadeUp {
+  from { transform: translateY(32px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+</style><style id="fss3-style">
+
+.fss3-section {
+  background: #000;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 48px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Scene container de reference */
+.fss3-scene {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  height: 680px;
+}
+
+/* ── Ligne centrale ── */
+.fss3-center-row {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.fss3-word {
+  font-size: clamp(46px, 5.2vw, 84px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -2.5px;
+  line-height: 1;
+}
+
+.fss3-sphere-wrap {
+  width:  clamp(260px, 34vw, 440px);
+  height: clamp(260px, 34vw, 440px);
+  flex-shrink: 0;
+  pointer-events: auto;
+}
+
+/* ── Cartes de service ── */
+.fss3-card {
+  position: absolute;
+  max-width: 280px;
+}
+
+.fss3-tl { top: 20px; left: 0; }
+.fss3-tr { top: 60px; right: 0; text-align: right; max-width: 260px; }
+.fss3-bc {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: 380px;
+}
+
+/* textes cartes */
+.fss3-num {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.fss3-title {
+  font-size: clamp(18px, 1.6vw, 24px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin: 0 0 10px;
+  transition: color .3s;
+}
+
+.fss3-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.5);
+  margin: 0;
+  transition: color .3s;
+}
+
+.fss3-card:hover .fss3-title { color: #f59e0b; }
+.fss3-card:hover .fss3-desc  { color: rgba(255,255,255,0.75); }
+
+/* ── Reveal au scroll ── */
+.fss3-reveal {
+  opacity: 0;
+  transition: opacity .85s ease, transform .85s ease;
+}
+.fss3-tl.fss3-reveal { transform: translate(-28px, 0); }
+.fss3-tr.fss3-reveal { transform: translate( 28px, 0); }
+.fss3-bc.fss3-reveal { transform: translateX(-50%) translateY(28px); }
+
+.fss3-reveal.fss3-on { opacity: 1; }
+.fss3-tl.fss3-reveal.fss3-on { transform: translate(0,0); transition-delay: 0ms; }
+.fss3-tr.fss3-reveal.fss3-on { transform: translate(0,0); transition-delay:150ms; }
+.fss3-bc.fss3-reveal.fss3-on { transform: translateX(-50%) translateY(0); transition-delay:300ms; }
+
+</style><style id="responsive-fix">
+/* =============================================================
+   RESPONSIVE — Tablette (<=991px), Mobile (<=767px), XS (<=479px)
+   ============================================================= */
+
+/* ── TABLETTE (<=991px) ── */
+@media (max-width: 991px) {
+
+  /* Navigation */
+  .fs-nav { padding: 16px 32px; }
+
+  /* Hero : colonne + centrage */
+  .fs-hero {
+    flex-direction: column;
+    padding: 100px 40px 60px;
+    gap: 60px;
+    text-align: center;
+  }
+  .fs-hero-content { max-width: 100%; }
+  .fs-hero-actions { justify-content: center; }
+
+  /* Orbit hero : rayon reduit */
+  .fs-hero-visual { width: 400px !important; height: 400px !important; }
+  .fs-slot-1 { transform: rotate(  0deg) translateY(-155px); }
+  .fs-slot-2 { transform: rotate(120deg) translateY(-155px); }
+  .fs-slot-3 { transform: rotate(240deg) translateY(-155px); }
+
+  /* Services */
+  .fs-services { padding: 80px 40px; }
+  .fs-services-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Stats */
+  .fs-stats { padding: 60px 40px; }
+  .fs-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+
+  /* CTA */
+  .fs-cta-section { padding: 80px 40px; }
+
+  /* Footer */
+  .fs-footer { padding: 32px 40px; }
+  .fs-footer-inner {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+  .fs-footer-links { justify-content: center; }
+
+  /* Section Ce que Nous Faisons */
+  .fss3-section { padding: 80px 32px; min-height: auto; }
+  .fss3-scene   { height: 760px; }
+  .fss3-sphere-wrap { width: 300px !important; height: 300px !important; }
+  .fss3-word { font-size: clamp(38px, 4.5vw, 60px); }
+  .fss3-card { max-width: 230px; }
+  .fss3-title { font-size: 18px !important; }
+}
+
+/* ── MOBILE (<=767px) ── */
+@media (max-width: 767px) {
+
+  /* Navigation */
+  .fs-nav { padding: 14px 24px; gap: 12px; flex-wrap: wrap; }
+  .fs-nav-links { gap: 18px; font-size: 14px; }
+
+  /* Hero */
+  .fs-hero { padding: 88px 24px 48px; gap: 40px; }
+
+  /* Orbit hero : taille reduite */
+  .fs-hero-visual { width: 320px !important; height: 320px !important; }
+  .fs-hero-circle { width: 180px !important; height: 180px !important; }
+  .fs-hero-circle-inner { font-size: 28px !important; }
+  .fs-slot-1 { transform: rotate(  0deg) translateY(-120px); }
+  .fs-slot-2 { transform: rotate(120deg) translateY(-120px); }
+  .fs-slot-3 { transform: rotate(240deg) translateY(-120px); }
+  .fs-card-float {
+    font-size: 11px !important;
+    padding: 10px 14px !important;
+    gap: 8px !important;
+    border-radius: 12px !important;
+  }
+  .fs-card-icon { font-size: 16px !important; }
+
+  /* Services */
+  .fs-services { padding: 60px 24px; }
+  .fs-services-grid { grid-template-columns: 1fr; gap: 20px; }
+
+  /* Stats */
+  .fs-stats { padding: 50px 24px; }
+  .fs-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  .fs-stat-num { font-size: 42px; }
+
+  /* CTA */
+  .fs-cta-section { padding: 60px 24px; }
+
+  /* Footer */
+  .fs-footer { padding: 28px 24px; }
+
+  /* ── Section Ce que Nous Faisons : mode colonne ── */
+  .fss3-section { padding: 60px 24px; }
+
+  /* Scene passe en flex column */
+  .fss3-scene {
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 36px !important;
+  }
+
+  /* Ligne centrale : colonne (sphere entre les mots) */
+  .fss3-center-row {
+    position: static !important;
+    transform: none !important;
+    flex-direction: column !important;
+    white-space: normal !important;
+    text-align: center;
+    gap: 16px;
+    width: 100%;
+    order: 2;
+  }
+  .fss3-word {
+    font-size: clamp(34px, 8.5vw, 56px);
+    letter-spacing: -1.5px;
+  }
+  .fss3-sphere-wrap {
+    width: 260px !important;
+    height: 260px !important;
+  }
+
+  /* Cartes : retour au flux normal */
+  .fss3-card {
+    position: static !important;
+    transform: none !important;
+    max-width: 100% !important;
+    width: 100%;
+    text-align: left !important;
+  }
+  .fss3-tl { order: 1; }
+  .fss3-tr { order: 3; }
+  .fss3-bc { order: 4; }
+
+  /* Reveal simplifie pour mobile */
+  .fss3-tl.fss3-reveal,
+  .fss3-tr.fss3-reveal,
+  .fss3-bc.fss3-reveal {
+    transform: translateY(24px) !important;
+  }
+  .fss3-tl.fss3-reveal.fss3-on,
+  .fss3-tr.fss3-reveal.fss3-on,
+  .fss3-bc.fss3-reveal.fss3-on {
+    transform: translateY(0) !important;
+  }
+
+  .fss3-title { font-size: 20px !important; }
+  .fss3-desc  { font-size: 14px; }
+}
+
+/* ── PETIT MOBILE (<=479px) ── */
+@media (max-width: 479px) {
+
+  /* Navigation : cache les liens, garde logo + CTA */
+  .fs-nav { padding: 12px 20px; }
+  .fs-nav-links { display: none; }
+
+  /* Hero */
+  .fs-hero { padding: 76px 20px 40px; gap: 32px; }
+
+  /* Orbit hero : tres reduit */
+  .fs-hero-visual { width: 270px !important; height: 270px !important; }
+  .fs-hero-circle { width: 150px !important; height: 150px !important; }
+  .fs-hero-circle-inner { font-size: 22px !important; }
+  .fs-slot-1 { transform: rotate(  0deg) translateY(-102px); }
+  .fs-slot-2 { transform: rotate(120deg) translateY(-102px); }
+  .fs-slot-3 { transform: rotate(240deg) translateY(-102px); }
+  .fs-card-float {
+    font-size: 10px !important;
+    padding: 8px 12px !important;
+    gap: 6px !important;
+  }
+  .fs-card-icon { font-size: 13px !important; }
+
+  /* Services */
+  .fs-services { padding: 48px 20px; }
+  .fs-service-card { padding: 28px 24px; }
+
+  /* Stats */
+  .fs-stats { padding: 40px 20px; }
+  .fs-stat-num { font-size: 36px; }
+  .fs-stat-label { font-size: 13px; }
+
+  /* CTA */
+  .fs-cta-section { padding: 48px 20px; }
+
+  /* Footer */
+  .fs-footer { padding: 22px 20px; }
+
+  /* Section Ce que Nous Faisons */
+  .fss3-section { padding: 48px 20px; }
+  .fss3-sphere-wrap { width: 220px !important; height: 220px !important; }
+  .fss3-word { font-size: clamp(28px, 7.5vw, 44px); }
+  .fss3-title { font-size: 18px !important; }
+}
+</style><style id="shared-extra">
+
+/* ── Temoignages ── */
+.fs-testimonials {
+  background: #f9f9f9;
+  padding: 100px 60px;
+}
+.fs-testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.fs-testi-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 24px;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: box-shadow .3s, transform .3s;
+}
+.fs-testi-card:hover {
+  box-shadow: 0 16px 48px rgba(0,0,0,.08);
+  transform: translateY(-4px);
+}
+.fs-testi-stars { color: #f59e0b; font-size: 18px; letter-spacing: 2px; }
+.fs-testi-text  { color: #444; font-size: 15px; line-height: 1.75; font-style: italic; flex: 1; }
+.fs-testi-author { display: flex; align-items: center; gap: 14px; }
+.fs-testi-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 16px; color: #fff; flex-shrink: 0;
+}
+.fs-testi-name  { font-weight: 700; font-size: 14px; color: #111; }
+.fs-testi-role  { font-size: 12px; color: #888; margin-top: 2px; }
+
+/* ── Processus ── */
+.fs-process {
+  background: #111;
+  padding: 100px 60px;
+}
+.fs-process-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 2px;
+  max-width: 1100px;
+  margin: 48px auto 0;
+}
+.fs-process-step {
+  padding: 40px 32px;
+  border-left: 1px solid rgba(255,255,255,.08);
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.fs-process-step:first-child { border-left: none; }
+.fs-process-step.fs-visible  { opacity: 1; transform: translateY(0); }
+.fs-process-num  { font-size: 52px; font-weight: 800; color: rgba(255,255,255,.1); line-height:1; margin-bottom:20px; }
+.fs-process-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+.fs-process-desc  { font-size: 14px; color: #666; line-height: 1.7; }
+
+/* ── Hero About ── */
+.fs-about-hero-wrap {
+  background: #fff;
+  padding: 160px 60px 100px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.fs-about-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fef3c7; color: #92400e;
+  border-radius: 100px; padding: 6px 18px;
+  font-size: 13px; font-weight: 700;
+  margin-bottom: 28px;
+}
+.fs-about-h1 {
+  font-size: clamp(40px,5.5vw,76px);
+  font-weight: 800; letter-spacing: -2.5px;
+  color: #111; line-height: 1.05; margin-bottom: 28px;
+}
+.fs-about-sub {
+  font-size: 18px; color: #555; line-height: 1.7;
+  max-width: 620px; margin: 0 auto 60px;
+}
+.fs-about-stats {
+  display: flex; justify-content: center; gap: 64px;
+  flex-wrap: wrap;
+}
+.fs-about-stat-val {
+  font-size: 48px; font-weight: 800; letter-spacing:-2px; color:#111; line-height:1;
+}
+.fs-about-stat-lbl { font-size: 13px; color: #888; margin-top: 6px; font-weight: 500; }
+
+/* ── Histoire ── */
+.fs-histoire {
+  background: #f9f9f9;
+  padding: 100px 60px;
+}
+.fs-histoire-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.fs-histoire-year {
+  font-size: clamp(100px,12vw,160px);
+  font-weight: 800; color: rgba(0,0,0,.06);
+  line-height: 1; letter-spacing: -6px; margin-bottom: 8px;
+}
+.fs-histoire-subtitle { color: #f59e0b; font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+.fs-histoire-h2 { font-size: clamp(28px,3vw,44px); font-weight: 800; color: #111; letter-spacing:-1.5px; margin-bottom: 20px; }
+.fs-histoire-p  { font-size: 16px; color: #555; line-height: 1.8; margin-bottom: 16px; }
+.fs-histoire-visual {
+  position: relative; height: 420px;
+  display: flex; align-items: center; justify-content: center;
+}
+.fs-histoire-box {
+  width: 280px; height: 280px; border-radius: 36px;
+  background: linear-gradient(135deg,#111 0%,#333 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 90px;
+  animation: fs-float 5s ease-in-out infinite;
+  box-shadow: 0 24px 64px rgba(0,0,0,.18);
+}
+.fs-histoire-tag {
+  position: absolute; background: #fff;
+  border-radius: 14px; padding: 12px 20px;
+  font-size: 13px; font-weight: 700;
+  box-shadow: 0 4px 20px rgba(0,0,0,.1);
+}
+.fs-histoire-tag-1 { top: 32px; right: 16px; color: #f59e0b; }
+.fs-histoire-tag-2 { bottom: 48px; left: 0; color: #6366f1; }
+
+/* ── Equipe ── */
+.fs-equipe { background: #fff; padding: 100px 60px; }
+.fs-equipe-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 36px; max-width: 900px; margin: 64px auto 0;
+}
+.fs-equipe-card { text-align: center; }
+.fs-equipe-avatar {
+  width: 110px; height: 110px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; font-weight: 800; color: #fff;
+  margin: 0 auto 20px;
+}
+.fs-equipe-name { font-size: 20px; font-weight: 800; color: #111; margin-bottom: 6px; }
+.fs-equipe-role { font-size: 13px; color: #f59e0b; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+.fs-equipe-bio  { font-size: 14px; color: #666; line-height: 1.7; }
+
+/* ── Valeurs ── */
+.fs-valeurs { background: #0a0a0a; padding: 100px 60px; }
+.fs-valeurs-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 24px; max-width: 1000px; margin: 64px auto 0;
+}
+.fs-valeur-card {
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px; padding: 40px 32px;
+  transition: border-color .3s, background .3s;
+}
+.fs-valeur-card:hover { background: rgba(255,255,255,.04); border-color: rgba(245,158,11,.4); }
+.fs-valeur-emoji { font-size: 36px; margin-bottom: 20px; }
+.fs-valeur-title { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing:-.5px; }
+.fs-valeur-desc  { font-size: 14px; color: rgba(255,255,255,.5); line-height: 1.75; }
+
+/* ── CTA About ── */
+.fs-cta-about {
+  background: linear-gradient(135deg,#f59e0b 0%,#ef4444 50%,#6366f1 100%);
+  padding: 100px 60px; text-align: center;
+}
+.fs-cta-about h2 { font-size: clamp(36px,4.5vw,64px); font-weight:800; color:#fff; letter-spacing:-2px; margin-bottom:20px; }
+.fs-cta-about p  { font-size:18px; color:rgba(255,255,255,.85); max-width:520px; margin:0 auto 40px; line-height:1.7; }
+.fs-btn-white-lg {
+  background:#fff; color:#111; border-radius:100px;
+  padding:16px 44px; font-size:16px; font-weight:700;
+  text-decoration:none; display:inline-block;
+  transition: transform .2s, box-shadow .2s;
+}
+.fs-btn-white-lg:hover { transform:translateY(-2px); box-shadow:0 16px 40px rgba(0,0,0,.2); }
+
+/* ── Reveal generique ── */
+.fs-reveal-up {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity .75s ease, transform .75s ease;
+}
+.fs-reveal-up.fs-visible { opacity:1; transform:translateY(0); }
+
+/* ── Responsive additions ── */
+@media (max-width: 991px) {
+  .fs-testi-grid   { grid-template-columns: 1fr 1fr; }
+  .fs-process-grid { grid-template-columns: 1fr 1fr; }
+  .fs-histoire-inner { grid-template-columns: 1fr; gap:40px; }
+  .fs-histoire-visual { height: 280px; order: -1; }
+  .fs-histoire-box { width: 200px; height: 200px; font-size: 64px; }
+  .fs-equipe-grid  { grid-template-columns: 1fr 1fr; }
+  .fs-valeurs-grid { grid-template-columns: 1fr 1fr; }
+  .fs-about-stats  { gap: 40px; }
+  .fs-testimonials,.fs-process,.fs-about-hero-wrap,
+  .fs-histoire,.fs-equipe,.fs-valeurs,.fs-cta-about { padding: 80px 40px; }
+  .fs-about-hero-wrap { padding-top: 130px; }
+}
+@media (max-width: 767px) {
+  .fs-testi-grid   { grid-template-columns: 1fr; }
+  .fs-process-grid { grid-template-columns: 1fr 1fr; gap: 0; }
+  .fs-equipe-grid  { grid-template-columns: 1fr; }
+  .fs-valeurs-grid { grid-template-columns: 1fr; }
+  .fs-about-stats  { gap: 28px; }
+  .fs-about-stat-val { font-size: 38px; }
+  .fs-testimonials,.fs-process,.fs-about-hero-wrap,
+  .fs-histoire,.fs-equipe,.fs-valeurs,.fs-cta-about { padding: 60px 24px; }
+  .fs-about-hero-wrap { padding-top: 110px; }
+  .fs-histoire-year { font-size: 80px; }
+}
+@media (max-width: 479px) {
+  .fs-process-grid { grid-template-columns: 1fr; }
+  .fs-about-stats  { flex-direction: column; gap: 20px; }
+  .fs-testimonials,.fs-process,.fs-about-hero-wrap,
+  .fs-histoire,.fs-equipe,.fs-valeurs,.fs-cta-about { padding: 48px 20px; }
+  .fs-about-hero-wrap { padding-top: 90px; }
+}
+</style>
+<style id="contact-style">
+.fs-contact-hero {
+  background: #fff;
+  min-height: 100vh;
+  padding: 140px 60px 100px;
+  display: flex; align-items: center; justify-content: center;
+}
+.fs-contact-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  max-width: 1200px;
+  width: 100%;
+}
+.fs-contact-h1 {
+  font-size: clamp(38px,4.8vw,72px);
+  font-weight: 800; letter-spacing: -2.5px;
+  color: #111; line-height: 1.05; margin: 20px 0 24px;
+}
+.fs-contact-sub {
+  font-size: 17px; color: #555; line-height: 1.75; margin-bottom: 40px;
+}
+.fs-contact-infos { display: flex; flex-direction: column; gap: 20px; }
+.fs-contact-info-item {
+  display: flex; align-items: center; gap: 16px;
+}
+.fs-contact-info-icon {
+  width: 44px; height: 44px; background: #f9f9f9;
+  border-radius: 12px; display: flex; align-items: center;
+  justify-content: center; font-size: 18px; flex-shrink: 0;
+}
+.fs-contact-info-label { font-size: 11px; color: #aaa; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+.fs-contact-info-val   { font-size: 15px; color: #111; font-weight: 600; margin-top: 2px; }
+
+/* Formulaire */
+.fs-contact-form {
+  background: #f9f9f9; border-radius: 28px;
+  padding: 48px 44px; display: flex; flex-direction: column; gap: 20px;
+}
+.fs-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fs-form-group { display: flex; flex-direction: column; gap: 8px; }
+.fs-form-label { font-size: 12px; font-weight: 700; color: #444; letter-spacing: 1px; text-transform: uppercase; }
+.fs-form-input {
+  background: #fff; border: 1.5px solid #eee; border-radius: 12px;
+  padding: 14px 18px; font-size: 15px; color: #111;
+  font-family: inherit; outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  width: 100%; box-sizing: border-box;
+}
+.fs-form-input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,.12); }
+.fs-form-select { cursor: pointer; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+.fs-form-textarea { min-height: 130px; resize: vertical; }
+.fs-form-btn {
+  background: #111; color: #fff; border: none; border-radius: 100px;
+  padding: 16px 36px; font-size: 16px; font-weight: 700;
+  font-family: inherit; cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.fs-form-btn:hover { background: #f59e0b; transform: translateY(-2px); }
+.fs-form-note { font-size: 12px; color: #aaa; text-align: center; }
+
+/* Reassurance */
+.fs-reassurance {
+  background: #111; padding: 80px 60px;
+}
+.fs-reassurance-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 2px; max-width: 1100px; margin: 0 auto;
+}
+.fs-reassurance-item {
+  padding: 40px 32px; border-left: 1px solid rgba(255,255,255,.08);
+  text-align: center; opacity: 0; transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.fs-reassurance-item:first-child { border-left: none; }
+.fs-reassurance-item.fs-visible { opacity: 1; transform: translateY(0); }
+.fs-reassurance-icon  { font-size: 32px; margin-bottom: 16px; }
+.fs-reassurance-title { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+.fs-reassurance-desc  { font-size: 13px; color: #666; line-height: 1.6; }
+
+/* Responsive */
+@media (max-width: 991px) {
+  .fs-contact-hero { padding: 120px 40px 80px; }
+  .fs-contact-hero-inner { grid-template-columns: 1fr; gap: 50px; }
+  .fs-reassurance { padding: 60px 40px; }
+  .fs-reassurance-grid { grid-template-columns: 1fr 1fr; }
+  .fs-contact-form { padding: 36px 32px; }
+}
+@media (max-width: 767px) {
+  .fs-contact-hero { padding: 100px 24px 60px; }
+  .fs-form-row { grid-template-columns: 1fr; }
+  .fs-reassurance { padding: 50px 24px; }
+  .fs-reassurance-grid { grid-template-columns: 1fr 1fr; }
+  .fs-contact-form { padding: 28px 24px; }
+}
+@media (max-width: 479px) {
+  .fs-contact-hero { padding: 88px 20px 50px; }
+  .fs-reassurance { padding: 40px 20px; }
+  .fs-reassurance-grid { grid-template-columns: 1fr; }
+  .fs-contact-form { padding: 24px 20px; }
+}
+</style>
+</head><body>
+<div class="fs-site">
+<!-- Navigation -->
+<nav class="fs-nav">
+<div class="fs-nav-logo">J<span style="color:#f59e0b">★</span>Five</div>
+<ul class="fs-nav-links" role="list">
+<li><a class="fs-nav-link" href="../index.html">Accueil</a></li>
+<li><a class="fs-nav-link" href="../untitled/index.html">A propos</a></li>
+<li><a class="fs-nav-link active w--current" href="index.html">Contact</a></li>
+</ul>
+<a class="fs-nav-cta" href="index.html">Nous contacter</a>
+</nav>
+<!-- Hero Contact -->
+<section class="fs-contact-hero">
+<div class="fs-contact-hero-inner">
+<div class="fs-contact-left fs-reveal-up">
+<span class="fs-badge">💬 Parlons de votre projet</span>
+<h1 class="fs-contact-h1">
+          Demarrons<br/>
+<span class="fs-gradient-text">quelque chose</span><br/>
+          d'exceptionnel
+        </h1>
+<p class="fs-contact-sub">
+          Vous avez une idee ? Un projet ? Une question ?
+          On vous repond sous 24h avec des solutions concretes.
+        </p>
+<div class="fs-contact-infos">
+<div class="fs-contact-info-item">
+<div class="fs-contact-info-icon">✉</div>
+<div>
+<div class="fs-contact-info-label">Email</div>
+<div class="fs-contact-info-val">hello@jeremiesfivestar.com</div>
+</div>
+</div>
+<div class="fs-contact-info-item">
+<div class="fs-contact-info-icon">📍</div>
+<div>
+<div class="fs-contact-info-label">Localisation</div>
+<div class="fs-contact-info-val">Paris, France</div>
+</div>
+</div>
+<div class="fs-contact-info-item">
+<div class="fs-contact-info-icon">🕑</div>
+<div>
+<div class="fs-contact-info-label">Disponibilite</div>
+<div class="fs-contact-info-val">Lun - Ven, 9h - 18h</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fs-contact-right fs-reveal-up" style="transition-delay:150ms">
+<form class="fs-contact-form" onsubmit="return false;">
+<div class="fs-form-row">
+<div class="fs-form-group">
+<label class="fs-form-label">Prenom</label>
+<input class="fs-form-input" placeholder="Jean" type="text"/>
+</div>
+<div class="fs-form-group">
+<label class="fs-form-label">Nom</label>
+<input class="fs-form-input" placeholder="Dupont" type="text"/>
+</div>
+</div>
+<div class="fs-form-group">
+<label class="fs-form-label">Email</label>
+<input class="fs-form-input" placeholder="jean@exemple.com" type="email"/>
+</div>
+<div class="fs-form-group">
+<label class="fs-form-label">Type de projet</label>
+<select class="fs-form-input fs-form-select">
+<option value="">Selectionnez...</option>
+<option>Site vitrine</option>
+<option>E-commerce</option>
+<option>Application web</option>
+<option>Refonte graphique</option>
+<option>Strategie digitale</option>
+<option>Autre</option>
+</select>
+</div>
+<div class="fs-form-group">
+<label class="fs-form-label">Votre message</label>
+<textarea class="fs-form-input fs-form-textarea" placeholder="Decrivez votre projet, vos objectifs, votre budget indicatif..."></textarea>
+</div>
+<button class="fs-form-btn" type="submit">
+            Envoyer le message →
+          </button>
+<div class="fs-form-note">🔒 Vos donnees restent confidentielles. Reponse garantie sous 24h.</div>
+</form>
+</div>
+</div>
+</section>
+<!-- Bandeau reassurance -->
+<section class="fs-reassurance">
+<div class="fs-reassurance-grid">
+<div class="fs-reassurance-item fs-reveal-up" style="transition-delay:0ms">
+<div class="fs-reassurance-icon">⚡</div>
+<div class="fs-reassurance-title">Reponse rapide</div>
+<div class="fs-reassurance-desc">On vous repond sous 24h, toujours.</div>
+</div>
+<div class="fs-reassurance-item fs-reveal-up" style="transition-delay:100ms">
+<div class="fs-reassurance-icon">🌟</div>
+<div class="fs-reassurance-title">Devis gratuit</div>
+<div class="fs-reassurance-desc">Estimation detaillee sans engagement.</div>
+</div>
+<div class="fs-reassurance-item fs-reveal-up" style="transition-delay:200ms">
+<div class="fs-reassurance-icon">👑</div>
+<div class="fs-reassurance-title">Expertise prouvee</div>
+<div class="fs-reassurance-desc">150+ projets livres, 98% de satisfaction.</div>
+</div>
+<div class="fs-reassurance-item fs-reveal-up" style="transition-delay:300ms">
+<div class="fs-reassurance-icon">📌</div>
+<div class="fs-reassurance-title">Suivi personnalise</div>
+<div class="fs-reassurance-desc">Un interlocuteur dedie du debut a la fin.</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="fs-footer">
+<div class="fs-footer-inner">
+<div class="fs-footer-logo">J<span style="color:#f59e0b">★</span>Five</div>
+<p class="fs-footer-copy">© 2026 Jeremie's Five-Star. Tous droits reserves.</p>
+<div class="fs-footer-links">
+<a href="../index.html">Accueil</a>
+<a href="../untitled/index.html">A propos</a>
+<a class="w--current" href="index.html">Contact</a>
+</div>
+</div>
+</footer>
+</div>
+<script src="../js/jquery-3.5.1.min.dc5e7f18c8.js" type="text/javascript"></script><script src="../6a0da6b29614e8743e58b1a1/js/webflow.751e0867.c4af84be1c21006a.js" type="text/javascript"></script>
+<script id="contact-js">
+(function(){
+  var obs = new IntersectionObserver(function(e){
+    e.forEach(function(x){ if(x.isIntersecting) x.target.classList.add('fs-visible'); });
+  },{threshold:0.15});
+  document.querySelectorAll('.fs-reassurance-item, .fs-reveal-up').forEach(function(el){ obs.observe(el); });
+})();
+</script>
+<script id="shared-extra-js">
+(function(){
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('fs-visible');
+      }
+    });
+  },{threshold:0.15});
+  document.querySelectorAll(
+    '.fs-process-step, .fs-reveal-up, .fs-testi-card'
+  ).forEach(function(el){ obs.observe(el); });
+
+  // counter animation
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    var target = parseInt(el.getAttribute('data-count'));
+    var obs2 = new IntersectionObserver(function(entries){
+      if(!entries[0].isIntersecting) return;
+      obs2.disconnect();
+      var start = 0, duration = 1800;
+      var startTime = null;
+      function step(ts){
+        if(!startTime) startTime = ts;
+        var progress = Math.min((ts-startTime)/duration,1);
+        var ease = 1 - Math.pow(1-progress,3);
+        el.textContent = Math.round(ease*target) + (el.getAttribute('data-suffix')||'');
+        if(progress<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    },{threshold:0.5});
+    obs2.observe(el);
+  });
+})();
+</script></body></html>
