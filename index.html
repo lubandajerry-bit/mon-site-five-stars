@@ -6,130 +6,157 @@
 <link href="6a0da6b29614e8743e58b1a1/css/jeremies-five-star-site-17f12b.webflow.shared.10fe411de.css" rel="stylesheet" type="text/css"/>
 <style id="orbit-override">
 
-/* 1. Permettre aux cartes d etre visibles en dehors du hero */
+/* Permettre a la scene de deborder du hero sans etre coupee */
 .fs-hero        { overflow: visible !important; }
-.fs-hero-visual {
-  overflow: visible !important;
-  position: relative !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  width: 520px;
-  height: 520px !important;
+.fs-hero-visual { overflow: visible !important; }
+
+/* ── Scene "bulles" : pop d'entree + flottement independant par bulle,
+   plus un parallaxe souris applique en JS (voir hero-parallax) ── */
+.ic-scene {
+  position: relative;
+  width: 640px;
+  height: 590px;
+  transform: scale(.82);
+  transform-origin: center center;
 }
 
-/* 2. Reset positionnement absolu ancien des cartes */
-.fs-card-1,
-.fs-card-2,
-.fs-card-3 {
-  position: absolute !important;
-  top: auto !important; left: auto !important;
-  right: auto !important; bottom: auto !important;
-  animation: none !important;
-  white-space: nowrap;
-}
-
-/* 3. Anneau orbital : pivot au centre du cercle J-star */
-.fs-orbit-ring {
+.ic-bubble {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  transform-origin: 0 0;
-  animation: orbit-ring-spin 10s linear infinite;
-  z-index: 10;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  will-change: transform;
+  animation:
+    ic-pop .9s cubic-bezier(.175,.885,.32,1.4) var(--ic-delay, 0s) forwards,
+    ic-float var(--ic-float-dur, 6s) ease-in-out calc(var(--ic-delay, 0s) + .9s) infinite;
 }
 
-/* 4. Slots : 3 points a 120 deg sur l anneau (rayon 195px) */
-.fs-orbit-slot {
+.ic-memoji    { --ic-delay: .05s; --ic-float-dur: 7.2s; --ic-amp: -8px;  --ic-rot: .8deg;   }
+.ic-findmy    { --ic-delay: .25s; --ic-float-dur: 5.6s; --ic-amp: -9px;  --ic-rot: -1.4deg; }
+.ic-calendar  { --ic-delay: .40s; --ic-float-dur: 6.4s; --ic-amp: -10px; --ic-rot: 1.2deg;  }
+.ic-cloud     { --ic-delay: .55s; --ic-float-dur: 4.8s; --ic-amp: -6px;  --ic-rot: -2deg;   }
+.ic-mail      { --ic-delay: .50s; --ic-float-dur: 5.2s; --ic-amp: -8px;  --ic-rot: 1.6deg;  }
+.ic-photocard { --ic-delay: .60s; --ic-float-dur: 7.4s; --ic-amp: -7px;  --ic-rot: 3deg;    }
+.ic-contacts  { --ic-delay: .65s; --ic-float-dur: 6.8s; --ic-amp: -9px;  --ic-rot: -1.2deg; }
+.ic-photos    { --ic-delay: .35s; --ic-float-dur: 6s;   --ic-amp: -10px; --ic-rot: 1deg;    }
+.ic-invites   { --ic-delay: .70s; --ic-float-dur: 5.4s; --ic-amp: -8px;  --ic-rot: -1.6deg; }
+
+@keyframes ic-pop {
+  0%   { opacity: 0; transform: scale(.3) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes ic-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(var(--ic-amp, -9px)) rotate(var(--ic-rot, 1.2deg)); }
+}
+
+.ic-memoji {
+  width: 235px; height: 235px;
+  left: 200px; top: 185px;
+  background: #f2d3d8;
+  z-index: 5;
+  overflow: hidden;
+}
+.ic-memoji .ic-face {
+  font-size: 130px;
+  line-height: 1;
+  transform: translateY(6px);
+  animation: ic-think 11s ease-in-out infinite;
+}
+@keyframes ic-think {
+  0%, 100% { transform: translateY(6px) rotate(0deg); }
+  22%      { transform: translateY(2px) rotate(-4deg); }
+  48%      { transform: translateY(6px) rotate(0deg); }
+  74%      { transform: translateY(3px) rotate(3.5deg); }
+}
+
+.ic-findmy {
+  width: 96px; height: 96px;
+  left: 315px; top: 62px;
+  background: radial-gradient(circle at 50% 35%, #8ee08e 0%, #5cc95c 55%, #3fbf3f 100%);
+  box-shadow: 0 8px 24px rgba(80,190,80,.25);
+  z-index: 6;
+}
+
+.ic-calendar {
+  width: 112px; height: 112px;
+  left: 118px; top: 168px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,.10);
+  flex-direction: column;
+  z-index: 6;
+}
+.ic-calendar .ic-day  { color: #e8322e; font-size: 21px; font-weight: 700; letter-spacing: .5px; }
+.ic-calendar .ic-date { color: #111; font-size: 52px; font-weight: 300; line-height: 1; margin-top: 2px; }
+
+.ic-cloud {
+  width: 42px; height: 42px;
+  left: 96px; top: 300px;
+  background: #fff;
+  box-shadow: 0 5px 14px rgba(0,0,0,.10);
+  z-index: 7;
+}
+
+.ic-mail {
+  width: 70px; height: 70px;
+  left: 118px; top: 340px;
+  background: linear-gradient(180deg, #4aa9f5 0%, #1a7ee6 100%);
+  box-shadow: 0 8px 22px rgba(30,130,230,.30);
+  z-index: 6;
+}
+
+.ic-contacts {
+  width: 66px; height: 66px;
+  left: 480px; top: 208px;
+  background: #ececf0;
+  box-shadow: 0 6px 18px rgba(0,0,0,.10);
+  z-index: 6;
+}
+
+.ic-photocard {
+  width: 54px; height: 54px;
+  left: 520px; top: 200px;
+  z-index: 5;
+}
+.ic-photocard:after {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-}
-.fs-slot-1 { transform: rotate(  0deg) translateY(-195px); }
-.fs-slot-2 { transform: rotate(120deg) translateY(-195px); }
-.fs-slot-3 { transform: rotate(240deg) translateY(-195px); }
-
-/* 5. Cartes centrees sur leur slot, contre-rotation pour rester droites */
-.fs-orbit-slot .fs-card-float {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffb347 0%, #ff7847 45%, #e8562e 100%);
+  box-shadow: 0 5px 14px rgba(0,0,0,.12);
+  transform: rotate(10deg);
 }
 
-/* Slot 1 : angle initial 0 deg -> contre-rotation 0 -> -360 */
-.fs-slot-1 .fs-card-float {
-  transform: translate(-50%, -50%) rotate(0deg);
-  animation: orbit-counter-0   10s linear infinite;
+.ic-photos {
+  width: 112px; height: 112px;
+  left: 432px; top: 300px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,.10);
+  z-index: 6;
 }
-/* Slot 2 : angle initial 120 deg -> contre-rotation -120 -> -480 */
-.fs-slot-2 .fs-card-float {
-  transform: translate(-50%, -50%) rotate(-120deg);
-  animation: orbit-counter-120 10s linear infinite;
-}
-/* Slot 3 : angle initial 240 deg -> contre-rotation -240 -> -600 */
-.fs-slot-3 .fs-card-float {
-  transform: translate(-50%, -50%) rotate(-240deg);
-  animation: orbit-counter-240 10s linear infinite;
+.ic-photos svg { animation: ic-pinwheel 24s linear infinite; }
+@keyframes ic-pinwheel { to { transform: rotate(360deg); } }
+
+.ic-invites {
+  width: 96px; height: 96px;
+  left: 300px; top: 428px;
+  background: radial-gradient(circle at 50% 40%, #ffd60a 0%, #f5c400 100%);
+  box-shadow: 0 8px 24px rgba(245,200,0,.30);
+  z-index: 4;
 }
 
-/* 6. Cercle J-star : visible au-dessus de l anneau */
-.fs-hero-circle       { z-index: 5; position: relative; }
-.fs-hero-circle-inner { z-index: 5; }
-
-/* 7. Keyframes ───────────────────────────────────── */
-@keyframes orbit-ring-spin {
-  from { transform: rotate(0deg);   }
-  to   { transform: rotate(360deg); }
-}
-@keyframes orbit-counter-0 {
-  from { transform: translate(-50%, -50%) rotate(  0deg); }
-  to   { transform: translate(-50%, -50%) rotate(-360deg); }
-}
-@keyframes orbit-counter-120 {
-  from { transform: translate(-50%, -50%) rotate(-120deg); }
-  to   { transform: translate(-50%, -50%) rotate(-480deg); }
-}
-@keyframes orbit-counter-240 {
-  from { transform: translate(-50%, -50%) rotate(-240deg); }
-  to   { transform: translate(-50%, -50%) rotate(-600deg); }
-}
-
-/* 8. Hover : ombre doree */
-.fs-card-float {
-  transition: box-shadow 0.3s ease;
-  cursor: default;
-}
-.fs-card-float:hover {
-  box-shadow: 0 16px 48px rgba(245,158,11,0.45) !important;
-}
-
-/* keyframes de base (float + spin) conserves pour le reste du site */
-@keyframes fs-float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-18px); }
-}
-@keyframes fs-spin-slow {
-  from { transform: rotate(0deg);   }
-  to   { transform: rotate(360deg); }
-}
-@keyframes fs-slideDown {
-  from { transform: translateY(-100%); opacity: 0; }
-  to   { transform: translateY(0);     opacity: 1; }
-}
-@keyframes fs-fadeUp {
-  from { transform: translateY(32px); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
-}
+@media (max-width: 991px) { .ic-scene { transform: scale(.6); } }
+@media (max-width: 767px) { .ic-scene { transform: scale(.48); } }
+@media (max-width: 479px) { .ic-scene { transform: scale(.4); } }
 
 </style>
 <style id="fss3-style">
 
 .fss3-section {
-  background: #000;
+  background: #060c24;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -219,7 +246,7 @@
   transition: color .3s;
 }
 
-.fss3-card:hover .fss3-title { color: #f59e0b; }
+.fss3-card:hover .fss3-title { color: #f7931e; }
 .fss3-card:hover .fss3-desc  { color: rgba(255,255,255,0.75); }
 
 /* ── Reveal au scroll ── */
@@ -258,11 +285,8 @@
   .fs-hero-content { max-width: 100%; }
   .fs-hero-actions { justify-content: center; }
 
-  /* Orbit hero : rayon reduit */
+  /* Hero visuel : rayon reduit */
   .fs-hero-visual { width: 400px !important; height: 400px !important; }
-  .fs-slot-1 { transform: rotate(  0deg) translateY(-155px); }
-  .fs-slot-2 { transform: rotate(120deg) translateY(-155px); }
-  .fs-slot-3 { transform: rotate(240deg) translateY(-155px); }
 
   /* Services */
   .fs-services { padding: 80px 40px; }
@@ -303,20 +327,8 @@
   /* Hero */
   .fs-hero { padding: 88px 24px 48px; gap: 40px; }
 
-  /* Orbit hero : taille reduite */
+  /* Hero visuel : taille reduite */
   .fs-hero-visual { width: 320px !important; height: 320px !important; }
-  .fs-hero-circle { width: 180px !important; height: 180px !important; }
-  .fs-hero-circle-inner { font-size: 28px !important; }
-  .fs-slot-1 { transform: rotate(  0deg) translateY(-120px); }
-  .fs-slot-2 { transform: rotate(120deg) translateY(-120px); }
-  .fs-slot-3 { transform: rotate(240deg) translateY(-120px); }
-  .fs-card-float {
-    font-size: 11px !important;
-    padding: 10px 14px !important;
-    gap: 8px !important;
-    border-radius: 12px !important;
-  }
-  .fs-card-icon { font-size: 16px !important; }
 
   /* Services */
   .fs-services { padding: 60px 24px; }
@@ -403,19 +415,8 @@
   /* Hero */
   .fs-hero { padding: 76px 20px 40px; gap: 32px; }
 
-  /* Orbit hero : tres reduit */
+  /* Hero visuel : tres reduit */
   .fs-hero-visual { width: 270px !important; height: 270px !important; }
-  .fs-hero-circle { width: 150px !important; height: 150px !important; }
-  .fs-hero-circle-inner { font-size: 22px !important; }
-  .fs-slot-1 { transform: rotate(  0deg) translateY(-102px); }
-  .fs-slot-2 { transform: rotate(120deg) translateY(-102px); }
-  .fs-slot-3 { transform: rotate(240deg) translateY(-102px); }
-  .fs-card-float {
-    font-size: 10px !important;
-    padding: 8px 12px !important;
-    gap: 6px !important;
-  }
-  .fs-card-icon { font-size: 13px !important; }
 
   /* Services */
   .fs-services { padding: 48px 20px; }
@@ -443,7 +444,7 @@
 
 /* ── Temoignages ── */
 .fs-testimonials {
-  background: #f9f9f9;
+  background: #f4f7fc;
   padding: 100px 60px;
 }
 .fs-testi-grid {
@@ -455,7 +456,7 @@
 }
 .fs-testi-card {
   background: #fff;
-  border: 1px solid #eee;
+  border: 1px solid #e4ecf9;
   border-radius: 24px;
   padding: 36px 32px;
   display: flex;
@@ -467,7 +468,7 @@
   box-shadow: 0 16px 48px rgba(0,0,0,.08);
   transform: translateY(-4px);
 }
-.fs-testi-stars { color: #f59e0b; font-size: 18px; letter-spacing: 2px; }
+.fs-testi-stars { color: #f7931e; font-size: 18px; letter-spacing: 2px; }
 .fs-testi-text  { color: #444; font-size: 15px; line-height: 1.75; font-style: italic; flex: 1; }
 .fs-testi-author { display: flex; align-items: center; gap: 14px; }
 .fs-testi-avatar {
@@ -475,12 +476,12 @@
   display: flex; align-items: center; justify-content: center;
   font-weight: 800; font-size: 16px; color: #fff; flex-shrink: 0;
 }
-.fs-testi-name  { font-weight: 700; font-size: 14px; color: #111; }
-.fs-testi-role  { font-size: 12px; color: #888; margin-top: 2px; }
+.fs-testi-name  { font-weight: 700; font-size: 14px; color: #10193a; }
+.fs-testi-role  { font-size: 12px; color: #7280a3; margin-top: 2px; }
 
 /* ── Processus ── */
 .fs-process {
-  background: #111;
+  background: #10193a;
   padding: 100px 60px;
 }
 .fs-process-grid {
@@ -501,7 +502,7 @@
 .fs-process-step.fs-visible  { opacity: 1; transform: translateY(0); }
 .fs-process-num  { font-size: 52px; font-weight: 800; color: rgba(255,255,255,.1); line-height:1; margin-bottom:20px; }
 .fs-process-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; }
-.fs-process-desc  { font-size: 14px; color: #666; line-height: 1.7; }
+.fs-process-desc  { font-size: 14px; color: #5b6478; line-height: 1.7; }
 
 /* ── Hero About ── */
 .fs-about-hero-wrap {
@@ -513,7 +514,7 @@
 }
 .fs-about-badge {
   display: inline-flex; align-items: center; gap: 6px;
-  background: #fef3c7; color: #92400e;
+  background: #ffead0; color: #a65200;
   border-radius: 100px; padding: 6px 18px;
   font-size: 13px; font-weight: 700;
   margin-bottom: 28px;
@@ -521,10 +522,10 @@
 .fs-about-h1 {
   font-size: clamp(40px,5.5vw,76px);
   font-weight: 800; letter-spacing: -2.5px;
-  color: #111; line-height: 1.05; margin-bottom: 28px;
+  color: #10193a; line-height: 1.05; margin-bottom: 28px;
 }
 .fs-about-sub {
-  font-size: 18px; color: #555; line-height: 1.7;
+  font-size: 18px; color: #4b5568; line-height: 1.7;
   max-width: 620px; margin: 0 auto 60px;
 }
 .fs-about-stats {
@@ -532,13 +533,13 @@
   flex-wrap: wrap;
 }
 .fs-about-stat-val {
-  font-size: 48px; font-weight: 800; letter-spacing:-2px; color:#111; line-height:1;
+  font-size: 48px; font-weight: 800; letter-spacing:-2px; color:#10193a; line-height:1;
 }
-.fs-about-stat-lbl { font-size: 13px; color: #888; margin-top: 6px; font-weight: 500; }
+.fs-about-stat-lbl { font-size: 13px; color: #7280a3; margin-top: 6px; font-weight: 500; }
 
 /* ── Histoire ── */
 .fs-histoire {
-  background: #f9f9f9;
+  background: #f4f7fc;
   padding: 100px 60px;
 }
 .fs-histoire-inner {
@@ -554,16 +555,16 @@
   font-weight: 800; color: rgba(0,0,0,.06);
   line-height: 1; letter-spacing: -6px; margin-bottom: 8px;
 }
-.fs-histoire-subtitle { color: #f59e0b; font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
-.fs-histoire-h2 { font-size: clamp(28px,3vw,44px); font-weight: 800; color: #111; letter-spacing:-1.5px; margin-bottom: 20px; }
-.fs-histoire-p  { font-size: 16px; color: #555; line-height: 1.8; margin-bottom: 16px; }
+.fs-histoire-subtitle { color: #f7931e; font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+.fs-histoire-h2 { font-size: clamp(28px,3vw,44px); font-weight: 800; color: #10193a; letter-spacing:-1.5px; margin-bottom: 20px; }
+.fs-histoire-p  { font-size: 16px; color: #4b5568; line-height: 1.8; margin-bottom: 16px; }
 .fs-histoire-visual {
   position: relative; height: 420px;
   display: flex; align-items: center; justify-content: center;
 }
 .fs-histoire-box {
   width: 280px; height: 280px; border-radius: 36px;
-  background: linear-gradient(135deg,#111 0%,#333 100%);
+  background: linear-gradient(135deg,#10193a 0%,#1a3170 100%);
   display: flex; align-items: center; justify-content: center;
   font-size: 90px;
   animation: fs-float 5s ease-in-out infinite;
@@ -575,8 +576,8 @@
   font-size: 13px; font-weight: 700;
   box-shadow: 0 4px 20px rgba(0,0,0,.1);
 }
-.fs-histoire-tag-1 { top: 32px; right: 16px; color: #f59e0b; }
-.fs-histoire-tag-2 { bottom: 48px; left: 0; color: #6366f1; }
+.fs-histoire-tag-1 { top: 32px; right: 16px; color: #f7931e; }
+.fs-histoire-tag-2 { bottom: 48px; left: 0; color: #1a56d6; }
 
 /* ── Equipe ── */
 .fs-equipe { background: #fff; padding: 100px 60px; }
@@ -591,12 +592,12 @@
   font-size: 40px; font-weight: 800; color: #fff;
   margin: 0 auto 20px;
 }
-.fs-equipe-name { font-size: 20px; font-weight: 800; color: #111; margin-bottom: 6px; }
-.fs-equipe-role { font-size: 13px; color: #f59e0b; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
-.fs-equipe-bio  { font-size: 14px; color: #666; line-height: 1.7; }
+.fs-equipe-name { font-size: 20px; font-weight: 800; color: #10193a; margin-bottom: 6px; }
+.fs-equipe-role { font-size: 13px; color: #f7931e; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+.fs-equipe-bio  { font-size: 14px; color: #5b6478; line-height: 1.7; }
 
 /* ── Valeurs ── */
-.fs-valeurs { background: #0a0a0a; padding: 100px 60px; }
+.fs-valeurs { background: #060c24; padding: 100px 60px; }
 .fs-valeurs-grid {
   display: grid; grid-template-columns: repeat(3,1fr);
   gap: 24px; max-width: 1000px; margin: 64px auto 0;
@@ -606,20 +607,20 @@
   border-radius: 24px; padding: 40px 32px;
   transition: border-color .3s, background .3s;
 }
-.fs-valeur-card:hover { background: rgba(255,255,255,.04); border-color: rgba(245,158,11,.4); }
+.fs-valeur-card:hover { background: rgba(255,255,255,.04); border-color: rgba(247,147,30,.4); }
 .fs-valeur-emoji { font-size: 36px; margin-bottom: 20px; }
 .fs-valeur-title { font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 12px; letter-spacing:-.5px; }
 .fs-valeur-desc  { font-size: 14px; color: rgba(255,255,255,.5); line-height: 1.75; }
 
 /* ── CTA About ── */
 .fs-cta-about {
-  background: linear-gradient(135deg,#f59e0b 0%,#ef4444 50%,#6366f1 100%);
+  background: linear-gradient(135deg,#f7931e 0%,#ff7a1a 50%,#1a56d6 100%);
   padding: 100px 60px; text-align: center;
 }
 .fs-cta-about h2 { font-size: clamp(36px,4.5vw,64px); font-weight:800; color:#fff; letter-spacing:-2px; margin-bottom:20px; }
 .fs-cta-about p  { font-size:18px; color:rgba(255,255,255,.85); max-width:520px; margin:0 auto 40px; line-height:1.7; }
 .fs-btn-white-lg {
-  background:#fff; color:#111; border-radius:100px;
+  background:#fff; color:#10193a; border-radius:100px;
   padding:16px 44px; font-size:16px; font-weight:700;
   text-decoration:none; display:inline-block;
   transition: transform .2s, box-shadow .2s;
@@ -667,7 +668,17 @@
   .fs-about-hero-wrap { padding-top: 90px; }
 }
 </style>
-</head><body class="body"><div class="fs-site"><nav class="fs-nav"><div class="fs-nav-logo">Ton<span>★</span>site</div><ul class="fs-nav-links" role="list"><li><a aria-current="page" class="fs-nav-link active w--current" href="index.html">Accueil</a></li><li><a class="fs-nav-link" href="a-propos/index.html">À propos</a></li><li><a class="fs-nav-link" href="contact/index.html">Contact</a></li></ul><a class="fs-nav-cta" href="contact/index.html">Nous contacter</a></nav><section class="fs-hero"><div class="fs-hero-bg"><div class="fs-orb fs-orb-1"></div><div class="fs-orb fs-orb-2"></div><div class="fs-orb fs-orb-3"></div></div><div class="fs-hero-content"><div class="fs-badge">⭐ Service 5 étoiles</div><h1 class="fs-hero-title">L'excellence<br/><span class="fs-gradient-text">à votre service</span></h1><p class="fs-hero-sub">Nous créons des expériences digitales mémorables qui transforment votre vision en réalité.</p><div class="fs-hero-actions"><a class="fs-btn-primary" href="contact/index.html">Démarrer un projet</a><a class="fs-btn-ghost" href="a-propos/index.html">En savoir plus →</a></div></div><div class="fs-hero-visual"><div class="fs-orbit-ring"><div class="fs-orbit-slot fs-slot-1"><div class="fs-card-float fs-card-1"><div class="fs-card-icon">🚀</div><div>Lancement rapide</div></div></div><div class="fs-orbit-slot fs-slot-2"><div class="fs-card-float fs-card-2"><div class="fs-card-icon">💎</div><div>Qualité premium</div></div></div><div class="fs-orbit-slot fs-slot-3"><div class="fs-card-float fs-card-3"><div class="fs-card-icon">✨</div><div>Design unique</div></div></div></div><div class="fs-hero-circle"><div class="fs-hero-circle-inner">T★</div></div></div></section><section class="fs-services"><div class="fs-section-header"><span class="fs-label">Nos services</span><h2 class="fs-section-title">Ce que nous <span class="fs-gradient-text">faisons</span></h2></div><div class="fs-services-grid"><div class="fs-service-card"><div class="fs-service-icon">🎨</div><h3>Design UI/UX</h3><p>Des interfaces élégantes et intuitives qui captivent vos utilisateurs dès le premier regard.</p></div><div class="fs-service-card"><div class="fs-service-icon">⚡</div><h3>Développement Web</h3><p>Des sites performants, rapides et optimisés pour tous les appareils et navigateurs.</p></div><div class="fs-service-card"><div class="fs-service-icon">📈</div><h3>Stratégie Digitale</h3><p>Une présence en ligne percutante pour faire grandir votre activité et attirer vos clients.</p></div></div></section>
+</head><body class="body"><div class="fs-site"><nav class="fs-nav"><div class="fs-nav-logo">Ton<span>★</span>site</div><ul class="fs-nav-links" role="list"><li><a aria-current="page" class="fs-nav-link active w--current" href="index.html">Accueil</a></li><li><a class="fs-nav-link" href="a-propos/index.html">À propos</a></li><li><a class="fs-nav-link" href="contact/index.html">Contact</a></li></ul><a class="fs-nav-cta" href="contact/index.html">Nous contacter</a></nav><section class="fs-hero"><div class="fs-hero-bg"><div class="fs-orb fs-orb-1"></div><div class="fs-orb fs-orb-2"></div><div class="fs-orb fs-orb-3"></div></div><div class="fs-hero-content"><div class="fs-badge">⭐ Service 5 étoiles</div><h1 class="fs-hero-title">L'excellence<br/><span class="fs-gradient-text">à votre service</span></h1><p class="fs-hero-sub">Nous créons des expériences digitales mémorables qui transforment votre vision en réalité.</p><div class="fs-hero-actions"><a class="fs-btn-primary" href="contact/index.html">Démarrer un projet</a><a class="fs-btn-ghost" href="a-propos/index.html">En savoir plus →</a></div></div><div class="fs-hero-visual"><div class="ic-scene" id="icScene">
+<div class="ic-bubble ic-findmy"><svg width="58" height="58" viewBox="0 0 58 58" fill="none"><circle cx="29" cy="29" r="20" stroke="#fff" stroke-width="6.5" stroke-dasharray="94 32" stroke-linecap="round" transform="rotate(120 29 29)"></circle><circle cx="29" cy="29" r="8.5" fill="#1a7ee6"></circle><circle cx="29" cy="29" r="8.5" fill="none" stroke="#fff" stroke-width="3"></circle></svg></div>
+<div class="ic-bubble ic-calendar"><div class="ic-day">WED</div><div class="ic-date">28</div></div>
+<div class="ic-bubble ic-memoji"><div class="ic-face" id="icFace">🤔</div></div>
+<div class="ic-bubble ic-cloud"><svg width="26" height="18" viewBox="0 0 26 18" fill="none"><path d="M20.5 17.5H6.8C3.6 17.5 1 15 1 11.9c0-2.8 2.1-5.1 4.8-5.5C6.7 3.2 9.6 1 13 1c3.9 0 7.1 2.9 7.6 6.7 2.5.3 4.4 2.4 4.4 4.9 0 2.7-2 4.9-4.5 4.9z" fill="#3ba0f2"></path></svg></div>
+<div class="ic-bubble ic-mail"><svg width="38" height="28" viewBox="0 0 38 28" fill="none"><rect x="1" y="1" width="36" height="26" rx="4" fill="#fff"></rect><path d="M2.5 3.5 19 15.5 35.5 3.5" stroke="#2f8ceb" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+<div class="ic-bubble ic-photocard"></div>
+<div class="ic-bubble ic-contacts"><svg width="34" height="34" viewBox="0 0 34 34" fill="none"><circle cx="17" cy="12" r="6.5" fill="#b8b8bf"></circle><path d="M4.5 30c1.5-6.5 6.5-10 12.5-10s11 3.5 12.5 10" fill="#b8b8bf"></path></svg></div>
+<div class="ic-bubble ic-photos"><svg width="66" height="66" viewBox="0 0 66 66" fill="none"><g><ellipse cx="33" cy="14" rx="8" ry="13" fill="#ffcc00" opacity=".85"></ellipse><ellipse cx="46.4" cy="19.6" rx="8" ry="13" fill="#ff9500" opacity=".85" transform="rotate(45 46.4 19.6)"></ellipse><ellipse cx="52" cy="33" rx="13" ry="8" fill="#ff3b30" opacity=".85"></ellipse><ellipse cx="46.4" cy="46.4" rx="8" ry="13" fill="#ff2d95" opacity=".85" transform="rotate(-45 46.4 46.4)"></ellipse><ellipse cx="33" cy="52" rx="8" ry="13" fill="#af52de" opacity=".85"></ellipse><ellipse cx="19.6" cy="46.4" rx="8" ry="13" fill="#007aff" opacity=".85" transform="rotate(45 19.6 46.4)"></ellipse><ellipse cx="14" cy="33" rx="13" ry="8" fill="#34c759" opacity=".85"></ellipse><ellipse cx="19.6" cy="19.6" rx="8" ry="13" fill="#8bc34a" opacity=".85" transform="rotate(-45 19.6 19.6)"></ellipse></g></svg></div>
+<div class="ic-bubble ic-invites"><svg width="60" height="60" viewBox="0 0 60 60" fill="none"><circle cx="14" cy="18" r="4.5" fill="#ff3b30"></circle><circle cx="30" cy="10" r="4" fill="#007aff"></circle><circle cx="46" cy="17" r="4.5" fill="#34c759"></circle><circle cx="10" cy="34" r="4" fill="#af52de"></circle><circle cx="27" cy="27" r="5" fill="#ff9500"></circle><circle cx="45" cy="33" r="4" fill="#ff2d95"></circle><circle cx="18" cy="47" r="4.5" fill="#5ac8fa"></circle><circle cx="35" cy="44" r="4" fill="#ffffff"></circle><circle cx="49" cy="48" r="3.5" fill="#ff3b30"></circle></svg></div>
+</div></div></section><section class="fs-services"><div class="fs-section-header"><span class="fs-label">Nos services</span><h2 class="fs-section-title">Ce que nous <span class="fs-gradient-text">faisons</span></h2></div><div class="fs-services-grid"><div class="fs-service-card"><div class="fs-service-icon">🎨</div><h3>Design UI/UX</h3><p>Des interfaces élégantes et intuitives qui captivent vos utilisateurs dès le premier regard.</p></div><div class="fs-service-card"><div class="fs-service-icon">⚡</div><h3>Développement Web</h3><p>Des sites performants, rapides et optimisés pour tous les appareils et navigateurs.</p></div><div class="fs-service-card"><div class="fs-service-icon">📈</div><h3>Stratégie Digitale</h3><p>Une présence en ligne percutante pour faire grandir votre activité et attirer vos clients.</p></div></div></section>
 <section class="fss3-section">
 <div class="fss3-scene">
 <!-- Carte 1 : haut-gauche -->
@@ -691,9 +702,9 @@
 <svg id="fss3-svg" overflow="visible" viewbox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <radialgradient cx="38%" cy="33%" id="fss3-sg" r="65%">
-<stop offset="0%" stop-color="#2e2e2e"></stop>
-<stop offset="50%" stop-color="#111"></stop>
-<stop offset="100%" stop-color="#030303"></stop>
+<stop offset="0%" stop-color="#2f5fc9"></stop>
+<stop offset="50%" stop-color="#10193a"></stop>
+<stop offset="100%" stop-color="#04081c"></stop>
 </radialgradient>
 <clippath id="fss3-sc">
 <circle cx="250" cy="250" r="185"></circle>
@@ -740,7 +751,7 @@
 </section>
 <section class="fs-process">
 <div class="fs-section-header fs-reveal-up" style="text-align:center">
-<span class="fs-label" style="color:#f59e0b">Comment on travaille</span>
+<span class="fs-label" style="color:#f7931e">Comment on travaille</span>
 <h2 class="fs-section-title" style="color:#fff">Notre <span class="fs-gradient-text">processus</span></h2>
 </div>
 <div class="fs-process-grid">
@@ -776,7 +787,7 @@
 <div class="fs-testi-stars">★★★★★</div>
 <p class="fs-testi-text">"Une equipe exceptionnelle qui a transforme notre vision en une experience digitale magnifique. Le resultat depasse toutes nos attentes."</p>
 <div class="fs-testi-author">
-<div class="fs-testi-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">1</div>
+<div class="fs-testi-avatar" style="background:linear-gradient(135deg,#f7931e,#ff7a1a)">1</div>
 <div>
 <div class="fs-testi-name">Personne 1</div>
 <div class="fs-testi-role">CEO, WEBNAYO </div>
@@ -787,7 +798,7 @@
 <div class="fs-testi-stars">★★★★★</div>
 <p class="fs-testi-text">"Professionnalisme, creativite et reactivite. votre site a gagne en visibilite et vos conversions ont augmente de 40% en 3 mois."</p>
 <div class="fs-testi-author">
-<div class="fs-testi-avatar" style="background:linear-gradient(135deg,#6366f1,#8b5cf6)">2</div>
+<div class="fs-testi-avatar" style="background:linear-gradient(135deg,#1a56d6,#2f7cf6)">2</div>
 <div>
 <div class="fs-testi-name">Personne 2</div>
 <div class="fs-testi-role">Présidente</div>
@@ -798,7 +809,7 @@
 <div class="fs-testi-stars">★★★★★</div>
 <p class="fs-testi-text">"Un partenaire de confiance pour notre transformation digitale. L'attention aux details et la qualite du design sont incomparables."</p>
 <div class="fs-testi-author">
-<div class="fs-testi-avatar" style="background:linear-gradient(135deg,#10b981,#059669)">3</div>
+<div class="fs-testi-avatar" style="background:linear-gradient(135deg,#4f9dff,#1a56d6)">3</div>
 <div>
 <div class="fs-testi-name">Personne 3</div>
 <div class="fs-testi-role">Directrice Marketing, Innova</div>
@@ -898,6 +909,52 @@
     },{threshold:0.5});
     obs2.observe(el);
   });
+})();
+</script>
+<script id="hero-parallax">
+(function () {
+  var scene = document.getElementById('icScene');
+  if (!scene) return;
+
+  var bubbles = [].slice.call(scene.querySelectorAll('.ic-bubble'));
+  var depths = bubbles.map(function (b) {
+    return b.classList.contains('ic-memoji') ? 6 : 10 + Math.random() * 10;
+  });
+
+  var targetX = 0, targetY = 0, curX = 0, curY = 0;
+
+  window.addEventListener('mousemove', function (e) {
+    targetX = (e.clientX / window.innerWidth  - 0.5) * 2;
+    targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  (function tick() {
+    curX += (targetX - curX) * 0.04;
+    curY += (targetY - curY) * 0.04;
+    bubbles.forEach(function (b, i) {
+      /* marge (et non transform) pour ne pas entrer en conflit avec les
+         animations de pop/flottement deja portees par transform */
+      b.style.marginLeft = (curX * depths[i]).toFixed(2) + 'px';
+      b.style.marginTop  = (curY * depths[i]).toFixed(2) + 'px';
+    });
+    requestAnimationFrame(tick);
+  })();
+
+  /* Le memoji central change de pose au fil d'une boucle de 11 s */
+  var face = document.getElementById('icFace');
+  if (face) {
+    var poses = ['🤔', '🧐', '🤔', '😌'];
+    var p = 0;
+    setInterval(function () {
+      p = (p + 1) % poses.length;
+      face.style.transition = 'opacity .35s';
+      face.style.opacity = 0;
+      setTimeout(function () {
+        face.textContent = poses[p];
+        face.style.opacity = 1;
+      }, 350);
+    }, 11000 / poses.length);
+  }
 })();
 </script>
 </body></html>

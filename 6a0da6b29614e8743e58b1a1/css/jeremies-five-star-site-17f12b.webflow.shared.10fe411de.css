@@ -543,7 +543,7 @@ label {
 }
 
 .w-input[disabled]:not(.w-input-disabled), .w-select[disabled]:not(.w-input-disabled), .w-input[readonly], .w-select[readonly], fieldset[disabled]:not(.w-input-disabled) .w-input, fieldset[disabled]:not(.w-input-disabled) .w-select {
-  background-color: #eee;
+  background-color: #e4ecf9;
 }
 
 textarea.w-input, textarea.w-select {
@@ -2108,7 +2108,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-site {
-  color: #111;
+  color: #10193a;
   background-color: #fff;
   font-family: Syne, DM Sans, sans-serif;
   overflow-x: hidden;
@@ -2132,7 +2132,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-nav-logo {
-  color: #111;
+  color: #10193a;
   letter-spacing: -.5px;
   font-size: 22px;
   font-weight: 800;
@@ -2146,7 +2146,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-nav-link {
-  color: #555;
+  color: #4b5568;
   font-size: 15px;
   font-weight: 500;
   text-decoration: none;
@@ -2155,18 +2155,23 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-nav-link.active {
-  color: #111;
+  color: #10193a;
 }
 
 .fs-nav-cta {
   color: #fff;
-  background-color: #111;
+  background-color: #f7931e;
   border-radius: 100px;
   padding: 10px 24px;
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   transition: background .2s, transform .2s;
+}
+
+.fs-nav-cta:hover {
+  background-color: #e8790a;
+  transform: translateY(-1px);
 }
 
 .fs-hero {
@@ -2194,7 +2199,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-orb-1 {
-  background-color: #f59e0b;
+  background-color: #f7931e;
   width: 500px;
   height: 500px;
   animation-delay: 0s;
@@ -2203,7 +2208,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-orb-2 {
-  background-color: #6366f1;
+  background-color: #1a56d6;
   width: 350px;
   height: 350px;
   animation-delay: 2s;
@@ -2212,7 +2217,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-orb-3 {
-  background-color: #10b981;
+  background-color: #4f9dff;
   width: 250px;
   height: 250px;
   animation-delay: 4s;
@@ -2229,8 +2234,8 @@ textarea.w-input, textarea.w-select {
 .fs-badge {
   grid-column-gap: 6px;
   grid-row-gap: 6px;
-  color: #92400e;
-  background-color: #fef3c7;
+  color: #a65200;
+  background-color: #ffead0;
   border-radius: 100px;
   align-items: center;
   margin-bottom: 24px;
@@ -2242,7 +2247,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-hero-title {
-  color: #111;
+  color: #10193a;
   letter-spacing: -2px;
   margin-bottom: 24px;
   font-size: clamp(44px, 5vw, 72px);
@@ -2254,13 +2259,13 @@ textarea.w-input, textarea.w-select {
 .fs-gradient-text {
   -webkit-text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(135deg, #f59e0b 0%, #ef4444 50%, #6366f1 100%);
+  background-image: linear-gradient(135deg, #f7931e 0%, #ff7a1a 50%, #1a56d6 100%);
   -webkit-background-clip: text;
   background-clip: text;
 }
 
 .fs-hero-sub {
-  color: #555;
+  color: #4b5568;
   margin-bottom: 40px;
   font-size: 18px;
   line-height: 1.7;
@@ -2277,7 +2282,7 @@ textarea.w-input, textarea.w-select {
 
 .fs-btn-primary {
   color: #fff;
-  background-color: #111;
+  background-color: #f7931e;
   border-radius: 100px;
   padding: 14px 32px;
   font-size: 15px;
@@ -2285,12 +2290,19 @@ textarea.w-input, textarea.w-select {
   text-decoration: none;
   transition: all .2s;
   display: inline-block;
+  box-shadow: 0 10px 30px #f7931e4d;
+}
+
+.fs-btn-primary:hover {
+  background-color: #e8790a;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px #f7931e66;
 }
 
 .fs-btn-ghost {
   grid-column-gap: 6px;
   grid-row-gap: 6px;
-  color: #111;
+  color: #1a56d6;
   align-items: center;
   font-size: 15px;
   font-weight: 600;
@@ -2309,7 +2321,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-hero-circle {
-  background-image: linear-gradient(135deg, #f59e0b, #ef4444);
+  background-image: linear-gradient(135deg, #f7931e, #ff7a1a);
   border-radius: 50%;
   justify-content: center;
   align-items: center;
@@ -2317,7 +2329,7 @@ textarea.w-input, textarea.w-select {
   height: 280px;
   animation: 20s linear infinite fs-spin-slow;
   display: flex;
-  box-shadow: 0 20px 60px #f59e0b4d;
+  box-shadow: 0 20px 60px #f7931e4d;
 }
 
 .fs-hero-circle-inner {
@@ -2330,7 +2342,7 @@ textarea.w-input, textarea.w-select {
 .fs-card-float {
   grid-column-gap: 12px;
   grid-row-gap: 12px;
-  color: #111;
+  color: #10193a;
   white-space: nowrap;
   background-color: #fff;
   border-radius: 16px;
@@ -2376,7 +2388,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-label {
-  color: #f59e0b;
+  color: #f7931e;
   letter-spacing: 2px;
   text-transform: uppercase;
   font-size: 13px;
@@ -2384,7 +2396,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-section-title {
-  color: #111;
+  color: #10193a;
   letter-spacing: -1.5px;
   margin-top: 12px;
   font-size: clamp(32px, 3.5vw, 52px);
@@ -2409,13 +2421,26 @@ textarea.w-input, textarea.w-select {
   transition: all .3s;
 }
 
+.fs-service-card:hover {
+  border-color: #1a56d6;
+  transform: translateY(-6px);
+  box-shadow: 0 20px 44px #1a56d61f;
+}
+
 .fs-service-icon {
+  width: 76px;
+  height: 76px;
+  background-color: #eaf1ff;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
   font-size: 36px;
+  display: flex;
 }
 
 .fs-stats {
-  background-color: #111;
+  background-color: #10193a;
   padding: 80px 60px;
 }
 
@@ -2442,7 +2467,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-stat-label {
-  color: #888;
+  color: #7280a3;
   margin-top: 8px;
   font-size: 14px;
   font-weight: 500;
@@ -2465,8 +2490,8 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-footer {
-  background-color: #f9f9f9;
-  border-top: 1px solid #eee;
+  background-color: #f4f7fc;
+  border-top: 1px solid #e4ecf9;
   padding: 40px 60px;
 }
 
@@ -2479,13 +2504,13 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-footer-logo {
-  color: #111;
+  color: #10193a;
   font-size: 20px;
   font-weight: 800;
 }
 
 .fs-footer-copy {
-  color: #888;
+  color: #7280a3;
   font-size: 14px;
 }
 
@@ -2517,7 +2542,7 @@ textarea.w-input, textarea.w-select {
 .fs-gradient-text-1 {
   -webkit-text-fill-color: transparent;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(135deg, #f59e0b 0%, #ef4444 50%, #6366f1 100%);
+  background-image: linear-gradient(135deg, #f7931e 0%, #ff7a1a 50%, #1a56d6 100%);
   -webkit-background-clip: text;
   background-clip: text;
 }
@@ -2543,7 +2568,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-story-box {
-  background-image: linear-gradient(135deg, #111 0%, #333 100%);
+  background-image: linear-gradient(135deg, #10193a 0%, #1a3170 100%);
   border-radius: 32px;
   justify-content: center;
   align-items: center;
@@ -2566,19 +2591,19 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-story-tag-1 {
-  color: #f59e0b;
+  color: #f7931e;
   top: 20px;
   right: 20px;
 }
 
 .fs-story-tag-2 {
-  color: #6366f1;
+  color: #1a56d6;
   bottom: 30px;
   left: 0;
 }
 
 .fs-values {
-  background-color: #f9f9f9;
+  background-color: #f4f7fc;
   padding: 100px 60px;
 }
 
@@ -2594,15 +2619,28 @@ textarea.w-input, textarea.w-select {
 
 .fs-value-card {
   background-color: #fff;
-  border: 1px solid #eee;
+  border: 1px solid #e4ecf9;
   border-radius: 20px;
   padding: 36px 28px;
   transition: all .3s;
 }
 
+.fs-value-card:hover {
+  border-color: #1a56d6;
+  transform: translateY(-6px);
+  box-shadow: 0 20px 44px #1a56d61f;
+}
+
 .fs-value-emoji {
+  width: 68px;
+  height: 68px;
+  background-color: #eaf1ff;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 16px;
   font-size: 32px;
+  display: flex;
 }
 
 .fs-team {
@@ -2638,20 +2676,20 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-team-avatar.inline-div-0 {
-  background-image: linear-gradient(135deg, #f59e0b, #ef4444);
+  background-image: linear-gradient(135deg, #f7931e, #ff7a1a);
 }
 
 .fs-team-avatar.inline-div-1 {
-  background-image: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background-image: linear-gradient(135deg, #1a56d6, #2f7cf6);
 }
 
 .fs-team-avatar.inline-div-2 {
-  background-image: linear-gradient(135deg, #10b981, #059669);
+  background-image: linear-gradient(135deg, #4f9dff, #1a56d6);
 }
 
 .fs-cta-section-1 {
   text-align: center;
-  background-color: #111;
+  background-color: #10193a;
   padding: 100px 60px;
 }
 
@@ -2661,7 +2699,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-btn-white {
-  color: #111;
+  color: #10193a;
   background-color: #fff;
   border-radius: 100px;
   padding: 16px 40px;
@@ -2673,7 +2711,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-footer-1 {
-  background-color: #0a0a0a;
+  background-color: #060c24;
   border-top: 1px solid #222;
   padding: 40px 60px;
 }
@@ -2685,7 +2723,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .fs-footer-copy-1 {
-  color: #666;
+  color: #5b6478;
   font-size: 14px;
 }
 
